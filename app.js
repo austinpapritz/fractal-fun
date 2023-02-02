@@ -24,18 +24,20 @@ window.onload = function () {
     canvas.addEventListener('wheel', function (event) {
         if (event.deltaY < 0) {
             size *= 1.2;
-            colorsArr = randomizeColors();
-            console.log('colorsArr', colorsArr);
         } else {
             size /= 1.2;
         }
+    });
+
+    // eslint-disable-next-line space-before-function-paren
+    canvas.addEventListener('click', function (event) {
+        randomizeColors();
     });
 
     //loops thru colorsArr then calls on getRandomColor to generate a random hex before setting it to the current index in colorsArr
     function randomizeColors() {
         for (var i = 0; i < colorsArr.length; i++) {
             colorsArr[i] = getRandomColor();
-            console.log('colorsArr[i]', colorsArr[i]);
         }
     }
 
@@ -46,7 +48,6 @@ window.onload = function () {
         for (var i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
         }
-        console.log('color', color);
         return color;
     }
 
