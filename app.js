@@ -15,9 +15,9 @@ window.onload = function () {
 
     canvas.addEventListener('click', function (event) {
         if (event.ctrlKey) {
-            size /= 2;
+            size /= 1.2;
         } else {
-            size *= 2;
+            size *= 1.2;
         }
 
         // var x = event.clientX;
