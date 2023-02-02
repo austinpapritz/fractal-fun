@@ -1,30 +1,56 @@
+// eslint-disable-next-line space-before-function-paren
 window.onload = function () {
     var canvas = document.getElementById('myCanvas');
     var ctx = canvas.getContext('2d');
     var size = 200;
+    //these are the colors used in the triangle
+    let colorsArr = ['#F000AA', '#AAF000', '#00AAF0'];
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth - 50;
+    canvas.height = window.innerHeight - 50;
 
+    //the canvas will follow your mouse
+    // eslint-disable-next-line space-before-function-paren
     canvas.addEventListener('mousemove', function (event) {
         var x = event.clientX - size / 2;
         var y = event.clientY - (size * Math.sqrt(3)) / 100;
         ctx.clearRect(canvas.width, canvas.height, canvas.width, canvas.height);
+        //the hex value is the color of the inner triangle
         drawTriangle(x, y, size, '#000000');
     });
 
-    canvas.addEventListener('click', function (event) {
-        if (event.ctrlKey) {
-            size /= 1.2;
-        } else {
+    //mouse wheel up will increase size and randomize the colors in colorsArr, mouse-wheel down will reduce the size
+    // eslint-disable-next-line space-before-function-paren
+    canvas.addEventListener('wheel', function (event) {
+        if (event.deltaY < 0) {
             size *= 1.2;
+            colorsArr = randomizeColors();
+            console.log('colorsArr', colorsArr);
+        } else {
+            size /= 1.2;
         }
-
-        // var x = event.clientX;
-        // var y = event.clientY;
-        // ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
 
+    //loops thru colorsArr then calls on getRandomColor to generate a random hex before setting it to the current index in colorsArr
+    function randomizeColors() {
+        for (var i = 0; i < colorsArr.length; i++) {
+            colorsArr[i] = getRandomColor();
+            console.log('colorsArr[i]', colorsArr[i]);
+        }
+    }
+
+    // Generate a random color
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        console.log('color', color);
+        return color;
+    }
+
+    //this draws the triangle
     // Draw the Sierpinski triangle
     function drawTriangle(x, y, size, color) {
         var height = (size * Math.sqrt(3)) / 2;
@@ -37,9 +63,9 @@ window.onload = function () {
         ctx.fill();
 
         if (size > 20) {
-            drawTriangle(x, y, size / 2, '#F000AA');
-            drawTriangle(x + size / 2, y, size / 2, '#AAF000');
-            drawTriangle(x + size / 4, y - height / 2, size / 2, '#00AAF0');
+            drawTriangle(x, y, size / 2, colorsArr[0]);
+            drawTriangle(x + size / 2, y, size / 2, colorsArr[1]);
+            drawTriangle(x + size / 4, y - height / 2, size / 2, colorsArr[2]);
         }
     }
 };
