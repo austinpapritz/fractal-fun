@@ -14,7 +14,7 @@ window.onload = function () {
     canvas.addEventListener('mousemove', function (event) {
         var x = event.clientX - size / 2;
         var y = event.clientY - (size * Math.sqrt(3)) / 100;
-        ctx.clearRect(canvas.width, canvas.height, canvas.width, canvas.height);
+
         //the hex value is the color of the inner triangle
         drawTriangle(x, y, size, '#000000');
     });
